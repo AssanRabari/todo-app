@@ -4,20 +4,20 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 function CreateTask() {
   const [task, setTask] = useState('');
-  const [isCompleted, SetIsCompleted] = useState(false);
+  //const [isCompleted, SetIsCompleted] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate()
 
   const handleSave = () => {
     setIsSaving(true);
     axios.post('http://localhost:3000/tasks', {
-      task: task,
-      isCompleted: isCompleted
+      task: task
+      //isCompleted: isCompleted
     })
       .then(function (response) {
         setIsSaving(false);
         setTask('')
-        SetIsCompleted('')
+        //SetIsCompleted('')
       })
       .catch(function (error) {
         setIsSaving(false)
@@ -46,15 +46,15 @@ function CreateTask() {
                 id="task"
                 name="task" />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="isCompleted">Is Completed</label>
-              {/* <input type="checkbox" 
+               <input type="checkbox" 
                 onChange={(event) => { SetIsCompleted(event.target.value) }}
                 className="form-control"
                 id="isCompleted"
                 rows="3"
                 name="isCompleted"
-              /> */}
+              /> 
               <textarea
                 onChange={(event) => { SetIsCompleted(event.target.value) }}
                 className="form-control"
@@ -62,7 +62,7 @@ function CreateTask() {
                 rows="3"
                 name="isCompleted">
               </textarea>
-            </div>
+            </div> */}
             <button
               disabled={isSaving}
               onClick={handleSave}

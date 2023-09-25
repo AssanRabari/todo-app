@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function ListTaks() {
     const buttons = [
@@ -10,15 +10,17 @@ function ListTaks() {
         },
         {
             name: "Active",
-            value: "false"
+            value: ""
         },
         {
             name: "Completed",
-            value: "true"
+            value: "on"
         },
     ];
 
     const [filtredTasks, setFiltredTasks] = useState(null);
+    // const [id, setId] = useState(useParams().id);
+    const [isSaving, setIsSaving] = useState(false);
 
     function filterTasks(filterType) {
         let filtredTasks1 = filtredTasks.filter(type => type.isCompleted === filterType);
@@ -56,17 +58,36 @@ function ListTaks() {
             .catch(function (error) {
 
             });
-        }
+    }
 
     const handleclear = () => {
-        const ids = filtredTasks.filter(input => input.isCompleted === 'true').map(input => input.id);
-        axios.delete(`http://localhost:3000/task/${ids}`)
+        const ids = filtredTasks.filter(input => input.isCompleted === 'on').map(input => input.id);
+        axios.delete(`http://localhost:3000/tasks/${ids}`)
             .then((res) => {
                 fetchTasksList()
             })
             .catch(function (error) {
                 console.log(error);
             });
+    }
+
+    const handleComplete = (id) => {
+        const isCompleted = "on";
+        console.log("------value", isCompleted);
+        console.log("id", id)
+        setIsSaving(true);
+        axios.patch(`http://localhost:3000/tasks/${id}`, {
+            isCompleted: isCompleted
+        })
+        .then(function (response) {
+            console.log("updated---");
+            setIsSaving(false);
+        })
+        .catch(function (error) {
+           console.log("Error--------",error)
+            setIsSaving(false)
+        });
+        
     }
     return (
         <div className="container">
@@ -109,10 +130,10 @@ function ListTaks() {
                                 return (
                                     <tr key={key}>
                                         <td>{task.task}</td>
-                                        <td>{task.isCompleted}</td>
-                                        {/* <td>
-                                        <input type="checkbox" onClick={}/>
-                                        </td> */}
+                                        {/* <td>{task.isCompleted}</td> */}
+                                        <td>
+                                            <input type="checkbox" defaultChecked={task.isCompleted} id="isCompleted" name="isCompleted" value={task.isCompleted} onClick={() => handleComplete(task.id)} />
+                                        </td>
                                         <td>
                                             <button
                                                 onClick={() => handleDelete(task.id)}

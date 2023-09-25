@@ -1,29 +1,14 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "task": "make a todo app",
-      "isCompleted": "false"
+      "task": "aasd",
+      "id": 6,
+      "isCompleted": "on"
     },
     {
-      "task": "New App",
-      "isCompleted": "true",
-      "id": 2
-    },
-    {
-      "task": "Weather App",
-      "isCompleted": "true",
-      "id": 3
-    },
-    {
-      "task": "New App1",
-      "isCompleted": "true",
-      "id": 4
-    },
-    {
-      "task": "Newtask",
-      "isCompleted": "true",
-      "id": 5
+      "task": "adada",
+      "id": 7,
+      "isCompleted": "on"
     }
   ]
 }
